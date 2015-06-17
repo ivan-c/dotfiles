@@ -24,6 +24,10 @@
 # @param $1  Name of variable (not the value of the variable) to expand
 __expand_tilde_by_ref()
 {
+    if [ -z "$(bind -v | grep 'set expand-tilde on')" ]; then
+        return 0;
+    fi
+
     # Does $1 start with tilde (~)?
     if [[ ${!1} == \~* ]]; then
         # Does $1 contain slash (/)?
@@ -55,7 +59,14 @@ _expand()
     # a tilde is fed to commands and ending up quoted instead of expanded.
 
     if [[ "$cur" == \~*/* ]]; then
-        eval cur=$cur 2>/dev/null
+        # eval cur=$cur 2>/dev/null
+
+        if [ -z "$(bind -v | grep 'set expand-tilde on')" ]; then
+            return 0;
+        else
+            cur=$cur 2>/dev/null
+        fi
+
     elif [[ "$cur" == \~* ]]; then
         cur=${cur#\~}
         COMPREPLY=( $( compgen -P '~' -u "$cur" ) )
