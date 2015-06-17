@@ -1,3 +1,81 @@
+# disable bash completion of tilde when `set expand-tilde Off`
+# see https://bugs.launchpad.net/ubuntu/+source/bash-completion/+bug/622403
+# Expand variable starting with tilde (~)
+# We want to expand ~foo/... to /home/foo/... to avoid problems when
+# word-to-complete starting with a tilde is fed to commands and ending up
+# quoted instead of expanded.
+# Only the first portion of the variable from the tilde up to the first slash
+# (~../) is expanded.  The remainder of the variable, containing for example
+# a dollar sign variable ($) or asterisk (*) is not expanded.
+# Example usage:
+#
+#    $ v="~"; __expand_tilde_by_ref v; echo "$v"
+#
+# Example output:
+#
+#       v                  output
+#    --------         ----------------
+#    ~                /home/user
+#    ~foo/bar         /home/foo/bar
+#    ~foo/$HOME       /home/foo/$HOME
+#    ~foo/a  b        /home/foo/a  b
+#    ~foo/*           /home/foo/*
+#
+# @param $1  Name of variable (not the value of the variable) to expand
+__expand_tilde_by_ref()
+{
+    if [ -z "$(bind -v | grep 'set expand-tilde on')" ]; then
+        return 0;
+    fi
+
+    # Does $1 start with tilde (~)?
+    if [[ ${!1} == \~* ]]; then
+        # Does $1 contain slash (/)?
+        if [[ ${!1} == */* ]]; then
+            # Yes, $1 contains slash;
+            # 1: Remove * including and after first slash (/), i.e. "~a/b"
+            #    becomes "~a".  Double quotes allow eval.
+            # 2: Remove * before the first slash (/), i.e. "~a/b"
+            #    becomes "b".  Single quotes prevent eval.
+            #       +-----1----+ +---2----+
+            eval $1="${!1/%\/*}"/'${!1#*/}'
+        else
+            # No, $1 doesn't contain slash
+            eval $1="${!1}"
+        fi
+    fi
+} # __expand_tilde_by_ref()
+
+
+# This function expands tildes in pathnames
+#
+_expand()
+{
+    # FIXME: Why was this here?
+    #[ "$cur" != "${cur%\\}" ] && cur+="\\"
+
+    # Expand ~username type directory specifications.  We want to expand
+    # ~foo/... to /home/foo/... to avoid problems when $cur starting with
+    # a tilde is fed to commands and ending up quoted instead of expanded.
+
+    if [[ "$cur" == \~*/* ]]; then
+        # eval cur=$cur 2>/dev/null
+
+        if [ -z "$(bind -v | grep 'set expand-tilde on')" ]; then
+            return 0;
+        else
+            cur=$cur 2>/dev/null
+        fi
+
+    elif [[ "$cur" == \~* ]]; then
+        cur=${cur#\~}
+        COMPREPLY=( $( compgen -P '~' -u "$cur" ) )
+        [[ ${#COMPREPLY[@]} -eq 1 ]] && eval COMPREPLY[0]=${COMPREPLY[0]}
+        return ${#COMPREPLY[@]}
+    fi
+}
+
+
 # bash completion for screen
 
 # have screen &&
