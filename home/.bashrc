@@ -92,11 +92,24 @@ fi
 
 # Git function for terminal prompt
 function parse_git_branch {
-   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+function git_color {
+    local git_status="$(git status 2> /dev/null)"
+
+    if [[ $git_status =~ "Changes to be committed" ]]; then
+        echo -ne ${Yellow}
+    elif [[ $git_status =~ "Changed but not updated" ]]; then
+        echo -ne ${Red}
+    elif [[ $git_status =~ "working directory clean" ]]; then
+        echo -ne ${Green}
+    else
+        echo -ne ${Blue}
+    fi
 }
 
 if [ "$color_prompt" = yes ]; then
-	PS1="\[${Green}\]\h\[${NC}\]:\[${Blue}\]\W\[${Yellow}\]\$(parse_git_branch)\[${NC}\]\\$ "
+	PS1="\[${Green}\]\h\[${NC}\]:\[${Blue}\]\W\[${Yellow}\]\\[$(git_color)\]$(parse_git_branch)\[${NC}\]\\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
