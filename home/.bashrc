@@ -109,7 +109,7 @@ function git_color {
 }
 
 if [ "$color_prompt" = yes ]; then
-	PS1="\[${Green}\]\h\[${NC}\]:\[${Blue}\]\W\[${Yellow}\]\\[$(git_color)\]$(parse_git_branch)\[${NC}\]\\$ "
+	PS1="\[${Green}\]\h\[${NC}\]:\[${Blue}\]\W\[${Yellow}\]\[\$(git_color)\]\$(parse_git_branch)\[${NC}\]\\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
