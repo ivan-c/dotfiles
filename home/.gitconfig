@@ -37,6 +37,10 @@
 	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
 	cached = diff --name-only --cached
 	root = rev-parse --show-toplevel
+
+    # Generate a remote url to use to access this repo
+	gen-remote-url  = "!echo $USER@$(hostname -f):$(git root) | sed -e 's#'"$HOME"'/#~/#g'"
+
     # Set repo to UW email
 	profileuw = config user.email \"ivanc@uw.edu\"
 [diff]
