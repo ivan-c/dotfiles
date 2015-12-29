@@ -1,23 +1,28 @@
 [core]
 	symlinks = false
 	excludesfile = ~/.gitignore_global
+
 [color]
 	ui = true
+
 [color "branch"]
 	current = yellow black
 	local = yellow
 	remote = magenta
+
 [color "diff"]
 	meta = yellow bold
 	frag = magenta bold
 	old = red reverse
 	new = green reverse
 	whitespace = white reverse
+
 [color "status"]
 	added = yellow
 	changed = green
 	untracked = cyan reverse
 	branch = magenta
+
 [user]
 	name = Ivan Cvitkovic
 	email = icvitkovic@gmail.com
@@ -27,11 +32,12 @@
 	co = checkout
 	stat = status
 	apply-stash-to-dirty-working-tree = !git stash show -p | git apply && git stash drop
-	root = rev-parse --show-toplevel
 	assume = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
 	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
 	cached = diff --name-only --cached
+	root = rev-parse --show-toplevel
+    # Set repo to UW email
 	profileuw = config user.email \"ivanc@uw.edu\"
 [diff]
 	algorithm = patience
