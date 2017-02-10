@@ -1,4 +1,4 @@
-alias pyserver='python manage.py runserver 0.0.0.0:8000'
+alias pyserver='python -m SimpleHTTPServer 8000'
 alias debug='tail -f --follow=name --retry `git root`/app/tmp/logs/debug.log'
 alias error='tail -f --follow=name --retry `git root`/app/tmp/logs/error.log'
 alias cake='`git root`/app/Console/cake'
