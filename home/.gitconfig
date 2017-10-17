@@ -28,6 +28,7 @@
 	email = icvitkovic@gmail.com
 
 [alias]
+	find = ls-tree -r HEAD --name-only
 	dif = !clear && git diff
 	co = checkout
 	stat = status
