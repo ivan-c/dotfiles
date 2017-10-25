@@ -1,3 +1,4 @@
+#!/bin/bash
 # disable bash completion of tilde when `set expand-tilde Off`
 # see https://bugs.launchpad.net/ubuntu/+source/bash-completion/+bug/622403
 # Expand variable starting with tilde (~)

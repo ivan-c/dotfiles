@@ -1,3 +1,4 @@
+#!/bin/sh -e
 alias pyserver='python -m SimpleHTTPServer 8000'
 alias debug='tail -f --follow=name --retry `git root`/app/tmp/logs/debug.log'
 alias error='tail -f --follow=name --retry `git root`/app/tmp/logs/error.log'
