@@ -20,3 +20,7 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# Run profile.d snippets
+# Override default behavior to allow file suffixes
+run-parts --regex '^\w' "$HOME/.profile.d"
