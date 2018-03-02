@@ -45,6 +45,9 @@
 	# Generate a remote url to use to access this repo
 	gen-remote-url  = "!echo $USER@$(hostname -f):$(git root) | sed -e 's#'"$HOME"'/#~/#g'"
 
+	# List branches by date
+	branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
 	# Set repo to UW email
 	profileuw = config user.email \"ivanc@uw.edu\"
 [diff]
