@@ -39,12 +39,13 @@
 	cached = diff --name-only --cached
 	root = rev-parse --show-toplevel
 
-    branch-prune = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+	# Delete merged branches
+	branch-prune = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 
-    # Generate a remote url to use to access this repo
+	# Generate a remote url to use to access this repo
 	gen-remote-url  = "!echo $USER@$(hostname -f):$(git root) | sed -e 's#'"$HOME"'/#~/#g'"
 
-    # Set repo to UW email
+	# Set repo to UW email
 	profileuw = config user.email \"ivanc@uw.edu\"
 [diff]
 	algorithm = patience
