@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Use nano as default editor
+export EDITOR=nano
+
 # Color definitions (taken from Color Bash Prompt HowTo).
 # Some colors might look different of some terminals.
 # For example, I see 'Bold Red' as 'orange' on my screen,
