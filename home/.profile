@@ -21,6 +21,5 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# Run profile.d snippets
-# Override default behavior to allow file suffixes
-run-parts --regex '^\w' "$HOME/.profile.d"
+# Run profile.d snippets in current shell
+eval $(find "$HOME/.profile.d/" -name "[a-z0-9]*" -exec echo . \'{}\'';' \;)
