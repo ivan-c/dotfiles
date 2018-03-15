@@ -54,3 +54,5 @@
 	algorithm = patience
 [log]
 	date = local
+[push]
+	default = current
