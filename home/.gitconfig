@@ -50,6 +50,7 @@
 
 	# Set repo to UW email
 	profileuw = config user.email \"ivanc@uw.edu\"
+	reset-permissions = !git diff -p -R --no-color | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
 [diff]
 	algorithm = patience
 [log]
