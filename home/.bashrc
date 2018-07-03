@@ -104,7 +104,7 @@ function git_color {
         echo -ne ${Yellow}
     elif [[ $git_status =~ "Changed but not updated" ]]; then
         echo -ne ${Red}
-    elif [[ $git_status =~ "working directory clean" ]]; then
+    elif [[ $git_status =~ "working tree clean" ]] || [[ $git_status =~ "working directory clean" ]]; then
         echo -ne ${Green}
     else
         echo -ne ${Blue}
