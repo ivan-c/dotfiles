@@ -45,6 +45,12 @@
 	# Generate a remote url to use to access this repo
 	gen-remote-url  = "!echo $USER@$(hostname -f):$(git root) | sed -e 's#'"$HOME"'/#~/#g'"
 
+	# Get branches removed from origin remote
+	remote-pruned = "!git remote prune origin -n | grep --color=never --fixed-strings '[would prune]' | awk '{print $NF}' | sed 's|origin/||g' | sort"
+
+	# Remove local branches with the same name as ones removed from origin
+	prune-squash-merged  = !bash -c 'comm -12 <(git branch | cut -c 3- | sort) <(git remote-pruned) | xargs echo git branch -D'
+
 	# List branches by date
 	branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 
