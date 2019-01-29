@@ -10,3 +10,19 @@ function instance(){
     echo '<?php ' $(find `git root`/app/Config/dhair/ -name 'dhair_*' ! -name '*ignore.php' -exec grep -P '^\s*[^/].*define.*INSTANCE_ID' {} \;) 'echo INSTANCE_ID;' | php
 }
 
+function docker(){
+    command="docker $@"
+    # use sudo based on `docker` group membership
+    if ! id --name --group "$USER" | grep --quiet --word-regexp "docker"; then
+        command="sudo ${command}"
+    fi
+    eval "$command"
+}
+function dc(){
+    command="docker-compose $@"
+    # use sudo based on `docker` group membership
+    if ! id --name --group "$USER" | grep --quiet --word-regexp "docker"; then
+        command="sudo ${command}"
+    fi
+    eval "$command"
+}
