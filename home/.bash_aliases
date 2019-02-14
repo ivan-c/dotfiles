@@ -11,18 +11,20 @@ function instance(){
 }
 
 function docker(){
-    command="docker $@"
+    local command="docker $@"
+    echo command: $command
     # use sudo based on `docker` group membership
     if ! id --name --groups "$USER" | grep --quiet --word-regexp "docker"; then
         command="sudo ${command}"
     fi
-    eval "$command"
+    echo eval command: $command
+    sh -c "$command"
 }
 function dc(){
-    command="docker-compose $@"
+    local command="docker-compose $@"
     # use sudo based on `docker` group membership
     if ! id --name --groups "$USER" | grep --quiet --word-regexp "docker"; then
         command="sudo ${command}"
     fi
-    eval "$command"
+    sh -c "$command"
 }
