@@ -13,7 +13,7 @@ function instance(){
 function docker(){
     command="docker $@"
     # use sudo based on `docker` group membership
-    if ! id --name --group "$USER" | grep --quiet --word-regexp "docker"; then
+    if ! id --name --groups "$USER" | grep --quiet --word-regexp "docker"; then
         command="sudo ${command}"
     fi
     eval "$command"
@@ -21,7 +21,7 @@ function docker(){
 function dc(){
     command="docker-compose $@"
     # use sudo based on `docker` group membership
-    if ! id --name --group "$USER" | grep --quiet --word-regexp "docker"; then
+    if ! id --name --groups "$USER" | grep --quiet --word-regexp "docker"; then
         command="sudo ${command}"
     fi
     eval "$command"
