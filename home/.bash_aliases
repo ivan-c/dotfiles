@@ -12,12 +12,10 @@ function instance(){
 
 function docker(){
     local command="docker $@"
-    echo command: $command
     # use sudo based on `docker` group membership
     if ! id --name --groups "$USER" | grep --quiet --word-regexp "docker"; then
         command="sudo ${command}"
     fi
-    echo eval command: $command
     sh -c "$command"
 }
 function dc(){
